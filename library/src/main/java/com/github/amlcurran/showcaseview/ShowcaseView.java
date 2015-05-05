@@ -65,13 +65,14 @@ public class ShowcaseView extends RelativeLayout
     private boolean hasCustomClickListener = false;
     private boolean blockTouches = true;
     private boolean hideOnTouch = false;
+    private boolean mBlockAll;
     private OnShowcaseEventListener mEventListener = OnShowcaseEventListener.NONE;
 
     private boolean hasAlteredText = false;
     private boolean hasNoTarget = false;
     private boolean shouldCentreText;
-    private Bitmap bitmapBuffer;
 
+    private Bitmap bitmapBuffer;
     // Animation items
     private long fadeInMillis;
     private long fadeOutMillis;
@@ -331,6 +332,10 @@ public class ShowcaseView extends RelativeLayout
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
+        if (mBlockAll) {
+            return true;
+        }
+
         float xDelta = Math.abs(motionEvent.getRawX() - showcaseX);
         float yDelta = Math.abs(motionEvent.getRawY() - showcaseY);
         double distanceFromFocus = Math.sqrt(Math.pow(xDelta, 2) + Math.pow(yDelta, 2));
@@ -382,6 +387,10 @@ public class ShowcaseView extends RelativeLayout
 
     public void showButton() {
         mEndButton.setVisibility(VISIBLE);
+    }
+
+    public void setBlockAll(final boolean blockAll) {
+        mBlockAll = blockAll;
     }
 
     /**
@@ -508,6 +517,13 @@ public class ShowcaseView extends RelativeLayout
         public Builder hideOnTouchOutside() {
             showcaseView.setBlocksTouches(true);
             showcaseView.setHideOnTouchOutside(true);
+            return this;
+        }
+
+        public Builder blockAll() {
+            showcaseView.setBlocksTouches(true);
+            showcaseView.setBlockAll(true);
+
             return this;
         }
 
