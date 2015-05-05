@@ -75,7 +75,6 @@ public class SampleActivity extends Activity implements View.OnClickListener,
                 .setContentText(R.string.showcase_main_message)
                 .setStyle(R.style.CustomShowcaseTheme2)
                 .setShowcaseEventListener(this)
-                .blockAll()
                 .build();
         sv.setButtonPosition(lps);
     }
